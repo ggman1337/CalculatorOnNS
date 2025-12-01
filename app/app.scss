@@ -5,17 +5,110 @@
 // This is where the vast majority of your CSS code goes.
 
 // Font icon class
-.fab {
-  font-family: 'Font Awesome 5 Brands', 'fa-brands-400';
-  font-weight: 400;
+$main-dark-blue: #1f2d3a;
+$dark-blue: #2a3e52;
+$light-dark-blue: #4e6e7e;
+$orange: #e67e22;
+$orange-dark: #d35400;
+$green: #3daf6d;
+$green-dark: #2f8a55;
+$purple: #8e44ad;
+$purple-dark: #7d3c98;
+$gray: #808788;
+$gray-dark: #95a5a6;
+$text-light: #ecf0f1;
+$text-dark: #2c3e50;
+$red: #ee4e3c;
+
+@mixin button-base {
+    font-size: 32px;
+    font-weight: bold;
+    margin: 2px;
+    border-radius: 10px;
+    border-width: 2px;
 }
 
-.fas {
-  font-family: 'Font Awesome 5 Free', 'fa-solid-900';
-  font-weight: 900;
+@mixin button-variant($background, $border, $active-background) {
+    background-color: $background;
+    color: $text-light;
+    border-color: $border;
+
+    &:active {
+        background-color: $active-background;
+    }
 }
 
-.far {
-  font-family: 'Font Awesome 5 Free', 'fa-regular-400';
-  font-weight: 400;
+@mixin button-active-state {
+    opacity: 0.7;
+    transform: scale(0.95);
+}
+
+Page {
+    background-color: $main-dark-blue;
+}
+
+.main-container {
+    height: 100%;
+    padding: 0;
+    margin-top: -25px;
+
+    .display {
+        background-color: darken($main-dark-blue, 5%);
+        color: $text-light;
+        font-size: 64px;
+        text-align: right;
+        padding: 30px 20px;
+        border-radius: 0;
+        min-height: 120px;
+        vertical-align: bottom;
+
+        &[text*="Ошибка"] {
+            color: $red;
+            font-size: 32px;
+        }
+    }
+
+    .buttons-grid {
+        height: 100%;
+        margin: 0;
+        padding: 5px;
+
+        .btn {
+            @include button-base;
+            height: 100%;
+            width: 100%;
+
+            &.number-btn {
+                @include button-variant($dark-blue, $main-dark-blue, lighten($dark-blue, 15%));
+            }
+            &.operator-btn {
+                @include button-variant($orange, $orange-dark, $orange-dark);
+            }
+            &.function-btn {
+                @include button-variant($gray, $gray-dark, $gray-dark);
+            }
+            &.equals-btn {
+                @include button-variant($green, $green-dark, $green-dark);
+            }
+            &.btn-active {
+                @include button-active-state;
+            }
+        }
+    }
+}
+
+@supports (orientation: landscape) {
+    .main-container {
+        .display {
+            font-size: 48px;
+            min-height: 80px;
+            padding: 20px 15px;
+        }
+        
+        .buttons-grid {
+            .btn {
+                font-size: 28px;
+            }
+        }
+    }
 }
